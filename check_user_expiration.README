@@ -1,0 +1,18 @@
+AIX:
+	passwd <user>
+	chuser maxage=1 <user>
+	check_user_expiration <user>	=> CRITICAL: expires in 7 days
+	chuser maxage=52 <user>
+	check_user_expiration <user>	=> OK: expires in 364 days
+	chuser maxage=0 <user>
+	check_user_expiration <user>	=> OK: User does not expire
+
+
+Solaris, Linux:
+	passwd <user>
+	passwd -x 1 <user>
+	check_user_expiration <user>	=> CRITICAL: Password expires in 1 days
+	passwd -x 365 gbl
+	check_user_expiration <user>	=> OK: Password expires in 365 days
+	passwd -x -1 gbl
+	check_user_expiration <user>	=> OK: User does not expire
